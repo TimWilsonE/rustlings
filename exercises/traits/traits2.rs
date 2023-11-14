@@ -8,13 +8,30 @@
 //
 // Execute `rustlings hint traits2` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 trait AppendBar {
     fn append_bar(self) -> Self;
 }
 
-// TODO: Implement trait `AppendBar` for a vector of strings.
+// This is what I think it would mean to append "Bar"
+// impl AppendBar for String {
+//     fn append_bar(&self) -> String {
+//         self.to_owned() + "Bar"
+//     }
+// }
+// impl<T: AppendBar> AppendBar for Vec<T> {
+//     fn append_bar(&self) -> Vec<T> {
+//         self.iter().map(|item| {item.append_bar()}).collect()
+//     }
+// }
+
+// This is silly. Why are we returning self if the function mutates it?
+// And why can this append_bar have mut self, whereas the train just has self?
+impl AppendBar for Vec<String> {
+    fn append_bar(mut self) -> Vec<String> {
+        self.push(String::from("Bar"));
+        self
+    }
+}
 
 #[cfg(test)]
 mod tests {
